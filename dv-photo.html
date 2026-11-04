@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DV Lottery & US Visa Photo Tool – 600×600 JPEG under 240 KB | Launchline Photo</title>
+<meta name="description" content="Make your DV Lottery or US visa photo: 600×600 pixels, JPEG, under 240 KB, checked for background, colour, sharpness and head position. Your photo never leaves your phone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2B50E8;--ink:#111827;--muted:#4B5563;--line:#E5E7EB;--soft:#F3F4F6;--green:#15803D;--red:#B91C1C;--amber:#92400E}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:#fff}
+a{color:#1D4ED8}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:18px;padding-bottom:18px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--blue)}
+.notice{background:#FFFBEB;border-bottom:1px solid #FDE68A;color:#78350F;font-size:15px;line-height:1.55}
+.notice .wrap{padding-top:14px;padding-bottom:14px}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0}
+h2{font-family:'Space Grotesk',sans-serif;font-size:26px;margin:0 0 12px}
+.lead{font-size:18px;line-height:1.6;color:var(--muted);margin:0;max-width:680px}
+.hero{padding:48px 0 24px;display:flex;flex-direction:column;gap:16px}
+.modes{display:flex;gap:8px;flex-wrap:wrap}
+.mode{font:inherit;font-weight:600;border:1.5px solid var(--line);background:#fff;padding:10px 16px;border-radius:999px;cursor:pointer;min-height:44px}
+.mode[aria-pressed="true"]{border-color:var(--blue);background:#EEF2FF;color:#1E3A8A}
+.app{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px;padding:24px 0 56px;align-items:start}
+.card{border:1px solid var(--line);border-radius:16px;padding:22px;background:#fff}
+.step{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.drop{border:2px dashed #C7D2FE;border-radius:14px;padding:28px 18px;text-align:center;background:#F8FAFF;display:flex;flex-direction:column;gap:10px;align-items:center}
+.btn{font:inherit;font-weight:600;font-size:16px;border:0;border-radius:10px;padding:14px 22px;cursor:pointer;min-height:48px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid #D1D5DB}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.stage{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;margin:0 auto;border-radius:12px;overflow:hidden;background:#fff;touch-action:none;border:1px solid var(--line)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%}
+#overlay{pointer-events:none}
+.controls{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+label.zoom{display:flex;gap:10px;align-items:center;font-weight:600;font-size:15px}
+input[type=range]{flex:1;min-width:160px;accent-color:var(--blue)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.checks li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--soft);font-size:15px;line-height:1.45}
+.checks li b{display:block}
+.ic{flex:0 0 22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;margin-top:1px}
+.pass .ic{background:var(--green)}.fail .ic{background:var(--red)}.warn .ic{background:#D97706}
+.pass{background:#F0FDF4!important}.fail{background:#FEF2F2!important}.warn{background:#FFFBEB!important}
+.confirm{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.confirm label{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;cursor:pointer}
+.confirm input{width:20px;height:20px;margin-top:2px;accent-color:var(--blue);flex:0 0 auto}
+.verdict{border-radius:12px;padding:14px 16px;font-weight:600;margin:12px 0}
+.verdict.ok{background:#DCFCE7;color:#14532D}.verdict.bad{background:#FEE2E2;color:#7F1D1D}
+.result{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.result img{width:220px;height:220px;border-radius:8px;border:1px solid var(--line)}
+.meta{font-size:14px;color:var(--muted);line-height:1.7}
+.price{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;margin:0;padding:0;list-style:none}
+.rules li{background:var(--soft);border-radius:12px;padding:16px;font-size:15px;line-height:1.5}
+.rules b{display:block;margin-bottom:4px}
+section.band{padding:48px 0;border-top:1px solid var(--line)}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:14px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+<a class="brand" href="index.html">Launchline<span>.</span> Photo</a>
+<a href="#how" style="color:var(--muted);text-decoration:none;font-weight:500">Photo rules</a>
+</div></header>
+
+<div class="notice" role="note"><div class="wrap">
+<b>Get ready early:</b> the U.S. Department of State has <b>not yet announced</b> dates for the next DV Lottery (the program is currently paused). Prepare your photo now so you are ready the day it opens. Entry is always <b>only</b> at <a href="https://dvprogram.state.gov/" rel="noopener">dvprogram.state.gov</a>. Your DV photo must be <b>taken within 6 months</b> of the day you submit, so if registration opens more than 6 months from now, take a fresh photo then. This tool is independent and <b>not affiliated with the U.S. government</b>.
+</div></div>
+
+<main class="wrap">
+<section class="hero">
+<h1>Be ready early. Prepare your DV Lottery photo now.</h1>
+<p class="lead">When registration opens, millions of people rush at once and many entries fail because of a bad photo. Get yours right today: upload a photo, line up your face with the guides, and get a 600×600 JPEG under 240 KB. We check the background, colour, brightness and sharpness, and tell you exactly what to fix. Your photo is processed on your own device and never uploaded to us.</p>
+<div class="modes" role="group" aria-label="What is the photo for?">
+<button class="mode" type="button" data-mode="dv" aria-pressed="true">DV Lottery entry</button>
+<button class="mode" type="button" data-mode="visa" aria-pressed="false">US visa (DS-160)</button>
+</div>
+</section>
+
+<div class="app">
+<div class="card">
+<div class="step">Step 1 · Upload</div>
+<h2>Choose your photo</h2>
+<div class="drop" id="drop">
+<p style="margin:0" class="muted">Front-facing photo, plain white or light wall behind you, good light, no glasses.</p>
+<label class="btn primary" for="file">Upload photo</label>
+<input id="file" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+<p class="small muted" style="margin:0">JPG, PNG or WebP · your photo stays on your device</p>
+</div>
+
+<div id="alignBox" hidden>
+<div class="step" style="margin-top:20px">Step 2 · Line up</div>
+<h2>Fit your face to the guides</h2>
+<p class="small muted" style="margin:0 0 12px">Drag the photo and use zoom so that the <b>top of your hair</b> touches the blue line, your <b>chin</b> sits on the orange line and your <b>eyes</b> are inside the green band.</p>
+<div class="stage" id="stage"><canvas id="view" width="600" height="600"></canvas><canvas id="overlay" width="600" height="600"></canvas></div>
+<div class="controls">
+<label class="zoom">Zoom <input id="zoom" type="range" min="0.2" max="4" step="0.01" value="1"></label>
+<div class="legend"><span><i style="background:#2563EB"></i>Top of hair</span><span><i style="background:#16A34A;height:10px;opacity:.5"></i>Eyes</span><span><i style="background:#EA580C"></i>Chin</span></div>
+<div class="row"><button class="btn ghost" type="button" id="reset">Re-centre</button><button class="btn dark" type="button" id="check">Check my photo</button></div>
+</div>
+</div>
+</div>
+
+<div class="card" id="results">
+<div class="step">Step 3 · Results</div>
+<h2>Photo check</h2>
+<p class="muted" id="emptyMsg" style="margin:0">Upload a photo to see your results here.</p>
+
+<div id="resultBox" hidden>
+<ul class="checks" id="checks"></ul>
+<div class="confirm" id="confirm">
+<p class="small" style="margin:6px 0 2px;font-weight:600">Please confirm (we can't check these automatically):</p>
+<label><input type="checkbox" required> Taken in the last 6 months and looks like me today</label>
+<label><input type="checkbox" required> Facing the camera, neutral face, both eyes open</label>
+<label><input type="checkbox" required> No glasses, no hat (religious head covering only if worn daily, face fully visible)</label>
+<label><input type="checkbox" required> Only me in the photo, no filters or editing</label>
+</div>
+<div class="verdict" id="verdict"></div>
+<div class="row" id="retakeRow" hidden><label class="btn primary" for="file">Upload a new photo</label><span class="small muted">Fix the red items, then try again.</span></div>
+
+<div id="buyBox" hidden>
+<div class="result">
+<img id="preview" alt="Preview of your processed photo with watermark">
+<div class="meta" id="meta"></div>
+</div>
+<div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+<div class="price" id="priceTag"></div>
+<div class="row">
+<a class="btn primary" id="payBtn" href="#" rel="noopener">Pay $2 and download</a>
+<button class="btn primary" type="button" id="dlBtn" hidden>Download my photo</button>
+</div>
+<p class="small muted" id="payNote" style="margin:0"></p>
+</div>
+</div>
+<p class="small muted" style="margin:14px 0 0">These checks cover the technical rules. Only the U.S. Department of State decides whether a photo is accepted, so no service can promise a 100% pass.</p>
+</div>
+</div>
+</div>
+
+<section class="band" id="how">
+<h2>The official photo rules we check</h2>
+<ul class="rules">
+<li><b>Size</b>Square, 600×600 pixels (max 1200×1200)</li>
+<li><b>File</b>JPEG, 240 KB or smaller</li>
+<li><b>Head size</b>Chin to top of hair is 50–69% of the photo height</li>
+<li><b>Eye position</b>Eyes 56–69% up from the bottom of the photo</li>
+<li><b>Background</b>Plain white or off-white, no shadows or patterns</li>
+<li><b>Colour</b>Full colour, not black and white, no filters</li>
+<li><b>Recent</b>Taken within the last 6 months</li>
+<li><b>Face</b>Facing the camera, neutral expression, eyes open, no glasses</li>
+</ul>
+<p class="small muted" style="margin-top:16px">Source: U.S. Department of State photo requirements at travel.state.gov. Always read the official instructions before you submit.</p>
+</section>
+
+<section class="band">
+<h2>Tips for a photo that passes</h2>
+<ul class="rules">
+<li><b>Stand 50 cm from a white wall</b>This avoids shadows behind your head.</li>
+<li><b>Face a window</b>Soft daylight from the front, not from above or behind.</li>
+<li><b>Ask someone else to take it</b>Hold the phone at eye level, 1–1.5 m away. Selfies distort the face.</li>
+<li><b>Use the back camera</b>It is sharper than the front camera.</li>
+</ul>
+</section>
+</main>
+
+<footer><div class="wrap" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+<span>© 2026 Launchline Photo · Independent service, not affiliated with the U.S. government.</span>
+<span>Questions: <a href="mailto:kcipay59@gmail.com">kcipay59@gmail.com</a></span>
+</div></footer>
+
+<script>
+var PRICE = '$2';   // charged securely through Sifalo Pay (server: /api/checkout)
+
+(function(){
+var S = 600;                       // output size
+var CROWN = 42, CHIN = 414;        // guide lines (head = 62% of height)
+var EYE_TOP = 186, EYE_BOT = 264;  // eyes 56–69% up from bottom
+var mode = 'dv';
+var img = null, scale = 1, minScale = 0.2, ox = 0, oy = 0;
+var view = document.getElementById('view'), vctx = view.getContext('2d');
+var over = document.getElementById('overlay'), octx = over.getContext('2d');
+var zoom = document.getElementById('zoom');
+var outBlob = null, outUrl = null;
+
+function q(id){return document.getElementById(id);}
+
+document.querySelectorAll('.mode').forEach(function(b){
+  b.addEventListener('click', function(){
+    mode = b.dataset.mode;
+    document.querySelectorAll('.mode').forEach(function(x){x.setAttribute('aria-pressed', x===b?'true':'false');});
+  });
+});
+
+function drawOverlay(){
+  octx.clearRect(0,0,S,S);
+  octx.fillStyle='rgba(22,163,74,.16)'; octx.fillRect(0,EYE_TOP,S,EYE_BOT-EYE_TOP);
+  octx.strokeStyle='rgba(22,163,74,.7)'; octx.lineWidth=2; octx.setLineDash([8,6]);
+  octx.beginPath(); octx.moveTo(0,EYE_TOP); octx.lineTo(S,EYE_TOP); octx.moveTo(0,EYE_BOT); octx.lineTo(S,EYE_BOT); octx.stroke();
+  octx.setLineDash([]); octx.lineWidth=4;
+  octx.strokeStyle='#2563EB'; octx.beginPath(); octx.moveTo(150,CROWN); octx.lineTo(450,CROWN); octx.stroke();
+  octx.strokeStyle='#EA580C'; octx.beginPath(); octx.moveTo(190,CHIN); octx.lineTo(410,CHIN); octx.stroke();
+  octx.strokeStyle='rgba(17,24,39,.35)'; octx.lineWidth=2; octx.setLineDash([6,6]);
+  octx.beginPath(); octx.ellipse(S/2,(CROWN+CHIN)/2,140,(CHIN-CROWN)/2,0,0,Math.PI*2); octx.stroke(); octx.setLineDash([]);
+}
+
+function draw(target, ctx){
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,S,S);
+  if(!img) return;
+  ctx.imageSmoothingQuality='high';
+  ctx.drawImage(img, ox, oy, img.width*scale, img.height*scale);
+}
+
+function fit(){
+  // default: image height covers about 1.6x the head guide, centred
+  scale = Math.max(S/img.width, S/img.height);
+  minScale = Math.min(S/img.width, S/img.height)*0.5;
+  zoom.min = minScale.toFixed(3); zoom.max = (scale*4).toFixed(3); zoom.value = scale;
+  ox = (S - img.width*scale)/2; oy = (S - img.height*scale)/2;
+  draw(view, vctx);
+}
+
+q('file').addEventListener('change', function(e){
+  var f = e.target.files && e.target.files[0]; if(!f) return;
+  var r = new FileReader();
+  r.onload = function(){
+    var im = new Image();
+    im.onload = function(){ img = im; q('alignBox').hidden=false; drawOverlay(); fit(); q('resultBox').hidden=true; q('emptyMsg').hidden=false; q('emptyMsg').textContent='Line up your face, then press "Check my photo".'; q('alignBox').scrollIntoView({behavior:'smooth',block:'start'}); };
+    im.onerror = function(){ alert('That file could not be opened. Please upload a JPG or PNG photo.'); };
+    im.src = r.result;
+  };
+  r.readAsDataURL(f);
+  e.target.value='';
+});
+
+zoom.addEventListener('input', function(){
+  var ns = parseFloat(zoom.value), cx = S/2, cy = (CROWN+CHIN)/2;
+  ox = cx - (cx-ox)*(ns/scale); oy = cy - (cy-oy)*(ns/scale); scale = ns; draw(view, vctx);
+});
+q('reset').addEventListener('click', function(){ if(img) fit(); });
+
+var stage = q('stage'), drag = null;
+stage.addEventListener('pointerdown', function(e){ if(!img) return; stage.setPointerCapture(e.pointerId); var k = S/stage.clientWidth; drag={x:e.clientX,y:e.clientY,ox:ox,oy:oy,k:k}; });
+stage.addEventListener('pointermove', function(e){ if(!drag) return; ox = drag.ox + (e.clientX-drag.x)*drag.k; oy = drag.oy + (e.clientY-drag.y)*drag.k; draw(view, vctx); });
+['pointerup','pointercancel'].forEach(function(t){ stage.addEventListener(t, function(){ drag=null; }); });
+stage.addEventListener('wheel', function(e){ if(!img) return; e.preventDefault(); var v = Math.min(parseFloat(zoom.max), Math.max(parseFloat(zoom.min), scale*(e.deltaY<0?1.05:0.95))); zoom.value=v; zoom.dispatchEvent(new Event('input')); }, {passive:false});
+
+/* ---------- analysis helpers ---------- */
+function region(data, x0,y0,x1,y1){
+  var n=0, sl=0, sl2=0, ss=0;
+  for(var y=y0;y<y1;y++) for(var x=x0;x<x1;x++){
+    var i=(y*S+x)*4, r=data[i], g=data[i+1], b=data[i+2];
+    var l=0.299*r+0.587*g+0.114*b, mx=Math.max(r,g,b), mn=Math.min(r,g,b);
+    var s= mx===0?0:(mx-mn)/mx;
+    n++; sl+=l; sl2+=l*l; ss+=s;
+  }
+  var m=sl/n; return {mean:m, std:Math.sqrt(Math.max(0,sl2/n-m*m)), sat:ss/n};
+}
+function inOval(x,y){ var cx=S/2, cy=(CROWN+CHIN)/2, rx=140, ry=(CHIN-CROWN)/2; return ((x-cx)*(x-cx))/(rx*rx)+((y-cy)*(y-cy))/(ry*ry) <= 1; }
+function faceStats(data){
+  var n=0, sl=0, sl2=0, lap=0, lap2=0, ln=0;
+  for(var y=CROWN+40;y<CHIN-20;y+=1) for(var x=S/2-110;x<S/2+110;x+=1){
+    if(!inOval(x,y)) continue;
+    var i=(y*S+x)*4, l=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2];
+    n++; sl+=l; sl2+=l*l;
+    var L=function(xx,yy){var j=(yy*S+xx)*4;return 0.299*data[j]+0.587*data[j+1]+0.114*data[j+2];};
+    var v = 4*l - L(x-1,y) - L(x+1,y) - L(x,y-1) - L(x,y+1);
+    lap+=v; lap2+=v*v; ln++;
+  }
+  var m=sl/n, lm=lap/ln;
+  return {mean:m, std:Math.sqrt(Math.max(0,sl2/n-m*m)), sharp: lap2/ln - lm*lm};
+}
+function coverage(){
+  // does the photo fully cover the 600x600 frame?
+  var x0=ox, y0=oy, x1=ox+img.width*scale, y1=oy+img.height*scale, t=2;
+  return {top:y0<=t, bottom:y1>=S-t, left:x0<=t, right:x1>=S-t};
+}
+function encode(canvas){
+  return new Promise(function(res){
+    var lo=0.4, hi=0.95, best=null, iter=0;
+    function step(){
+      var qv=(lo+hi)/2;
+      canvas.toBlob(function(b){
+        if(b.size<=240*1024){ best=b; lo=qv; } else { hi=qv; }
+        if(++iter<8) step(); else {
+          if(best) res(best); else canvas.toBlob(function(b2){res(b2);},'image/jpeg',0.35);
+        }
+      },'image/jpeg',qv);
+    }
+    step();
+  });
+}
+
+q('check').addEventListener('click', function(){
+  if(!img) return;
+  q('verdict').className='verdict'; q('verdict').textContent='Checking…'; q('buyBox').hidden=true; q('retakeRow').hidden=true;
+  var c = document.createElement('canvas'); c.width=S; c.height=S; var cx=c.getContext('2d');
+  draw(c, cx);
+  var data = cx.getImageData(0,0,S,S).data;
+  var res = [];
+  var cov = coverage();
+  var srcPx = S/scale; // source pixels across the output square
+  // 1 coverage
+  var gaps = Object.keys(cov).filter(function(k){return !cov[k];});
+  res.push(gaps.length===0 ? {s:'pass',t:'Photo fills the frame',d:'No empty edges.'}
+    : {s:'fail',t:'Photo does not fill the frame',d:'There is empty space at the '+gaps.join(', ')+'. Zoom in, or retake the photo with more space around your head and shoulders.'});
+  // 2 resolution
+  res.push(srcPx>=600 ? {s:'pass',t:'Image quality',d:'Enough detail for 600×600 ('+Math.round(srcPx)+' original pixels used).'}
+    : srcPx>=420 ? {s:'warn',t:'Image quality is borderline',d:'Only '+Math.round(srcPx)+' original pixels were used. A higher-resolution photo is safer.'}
+    : {s:'fail',t:'Image is too small or zoomed in too much',d:'Only '+Math.round(srcPx)+' original pixels. Use the phone\'s back camera and stand closer.'});
+  // 3 background
+  var bgL = region(data, 8, 8, 120, 150), bgR = region(data, S-120, 8, S-8, 150), sideL=region(data,8,150,60,330), sideR=region(data,S-60,150,S-8,330);
+  var bg=[bgL,bgR,sideL,sideR];
+  var bgMean = bg.reduce(function(a,b){return a+b.mean;},0)/4, bgStd = Math.max.apply(null,bg.map(function(b){return b.std;})), bgSat = Math.max.apply(null,bg.map(function(b){return b.sat;}));
+  var bgDiff = Math.max.apply(null,bg.map(function(b){return b.mean;})) - Math.min.apply(null,bg.map(function(b){return b.mean;}));
+  if(bgMean>=200 && bgStd<=22 && bgSat<=0.16 && bgDiff<=28) res.push({s:'pass',t:'Background is plain and light',d:'White or off-white, even, no pattern.'});
+  else {
+    var why=[]; if(bgMean<200) why.push('too dark or not white'); if(bgStd>22) why.push('busy (pattern, objects or shadows)'); if(bgSat>0.16) why.push('coloured'); if(bgDiff>28) why.push('uneven (shadow on one side)');
+    res.push({s:'fail',t:'Background is not plain white',d:'The background is '+why.join(', ').replace(/is /g,'')+'. Stand in front of a plain white wall, facing a window.'});
+  }
+  // 4 colour
+  var all = region(data, 0,0,S,S);
+  res.push(all.sat>0.04 ? {s:'pass',t:'Colour photo',d:'Not black and white.'} : {s:'fail',t:'Photo looks black and white',d:'The photo must be in full colour, without filters.'});
+  // 5 exposure + sharpness on face
+  var f = faceStats(data);
+  if(f.mean<70) res.push({s:'fail',t:'Face is too dark',d:'Face a window or a lamp so your face is evenly lit.'});
+  else if(f.mean>225) res.push({s:'fail',t:'Face is over-exposed',d:'Too much light or flash. Move away from direct sunlight.'});
+  else res.push({s:'pass',t:'Face brightness',d:'Your face is evenly lit.'});
+  res.push(f.sharp>=40 ? {s:'pass',t:'Sharp and in focus',d:'No noticeable blur.'} : {s:'fail',t:'Photo looks blurry',d:'Hold the phone still, tap the screen to focus, and use good light.'});
+  // 6 framing sanity: face area should differ from background
+  res.push(Math.abs(f.mean-bgMean)>12 || f.std>25 ? {s:'pass',t:'Head inside the guide',d:'Head size target 62% of height; eyes in the 56–69% band.'} : {s:'fail',t:'No face found inside the guide',d:'Move the photo so your face fills the dashed oval.'});
+  // 7 format
+  res.push({s:'pass',t:'Format',d:'Saved as 600×600 JPEG under 240 KB.'});
+
+  var list=q('checks'); list.innerHTML='';
+  res.forEach(function(r){
+    var li=document.createElement('li'); li.className=r.s;
+    var ic=document.createElement('span'); ic.className='ic'; ic.textContent= r.s==='pass'?'✓':(r.s==='fail'?'✕':'!');
+    var tx=document.createElement('div'); var b=document.createElement('b'); b.textContent=r.t; tx.appendChild(b); tx.appendChild(document.createTextNode(r.d));
+    li.appendChild(ic); li.appendChild(tx); list.appendChild(li);
+  });
+  q('emptyMsg').hidden=true; q('resultBox').hidden=false;
+  var failed = res.some(function(r){return r.s==='fail';});
+  window.__lastChecks = res;
+
+  encode(c).then(function(blob){
+    outBlob = blob; if(outUrl) URL.revokeObjectURL(outUrl); outUrl = URL.createObjectURL(blob);
+    // watermarked preview
+    var p=document.createElement('canvas'); p.width=S; p.height=S; var pc=p.getContext('2d'); pc.drawImage(c,0,0);
+    pc.save(); pc.translate(S/2,S/2); pc.rotate(-Math.PI/6); pc.fillStyle='rgba(43,80,232,.28)'; pc.font='bold 46px Inter, sans-serif'; pc.textAlign='center';
+    for(var k=-3;k<=3;k++) pc.fillText('PREVIEW · Launchline', 0, k*110); pc.restore();
+    q('preview').src = p.toDataURL('image/jpeg',0.7);
+    q('meta').innerHTML = '';
+    [['Size','600 × 600 px'],['File','JPEG, '+Math.round(blob.size/1024)+' KB'],['For', mode==='dv'?'DV Lottery entry':'US visa (DS-160)']].forEach(function(m){
+      var d=document.createElement('div'); var b=document.createElement('b'); b.textContent=m[0]+': '; d.appendChild(b); d.appendChild(document.createTextNode(m[1])); q('meta').appendChild(d);
+    });
+    updateVerdict(failed);
+  });
+});
+
+function confirmed(){ return Array.prototype.every.call(document.querySelectorAll('#confirm input'), function(i){return i.checked;}); }
+document.querySelectorAll('#confirm input').forEach(function(i){ i.addEventListener('change', function(){ if(window.__lastChecks) updateVerdict(window.__lastChecks.some(function(r){return r.s==='fail';})); }); });
+
+function updateVerdict(failed){
+  var v=q('verdict');
+  if(failed){ v.className='verdict bad'; v.textContent='Not ready yet. Please upload a new photo that fixes the red items.'; q('retakeRow').hidden=false; q('buyBox').hidden=true; return; }
+  q('retakeRow').hidden=true;
+  if(!confirmed()){ v.className='verdict bad'; v.textContent='Almost there. Tick the four boxes above to confirm the things we cannot check automatically.'; q('buyBox').hidden=true; return; }
+  v.className='verdict ok'; v.textContent='Your photo passed all automatic checks. Check the preview below, then pay to download.';
+  q('buyBox').hidden=false;
+  q('priceTag').textContent = PRICE;
+  q('dlBtn').hidden = true; q('payBtn').hidden = false;
+  q('payBtn').href = '#'; q('payBtn').textContent = 'Pay '+PRICE+' and download';
+  q('payNote').textContent = 'You saw the preview. Pay '+PRICE+' securely with card, EVC, ZAAD, Sahal, eDahab or Premier Wallet through Sifalo Pay. You come straight back here to download your photo without the watermark.';
+}
+q('payBtn').addEventListener('click', function(e){
+  e.preventDefault();
+  if(!outBlob) return;
+  var btn=q('payBtn'); btn.textContent='Opening secure payment…'; btn.style.pointerEvents='none';
+  var fr=new FileReader();
+  fr.onload=function(){
+    try{ sessionStorage.setItem('llp_photo', fr.result); sessionStorage.setItem('llp_mode', mode); }catch(err){}
+    fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:'dv-photo'})})
+      .then(function(r){return r.json();})
+      .then(function(d){ if(d.url){ location.href=d.url; } else { throw new Error(d.error||'failed'); } })
+      .catch(function(){ btn.textContent='Pay '+PRICE+' and download'; btn.style.pointerEvents=''; q('payNote').textContent='Payment could not be started. Please check your connection and try again.'; });
+  };
+  fr.readAsDataURL(outBlob);
+});
+q('dlBtn').addEventListener('click', function(){
+  if(!outUrl) return;
+  var a=document.createElement('a'); a.href=outUrl; a.download=(mode==='dv'?'dv-lottery-photo':'us-visa-photo')+'-600x600.jpg'; document.body.appendChild(a); a.click(); a.remove();
+});
+// returning from payment: verify with the server, then unlock the download
+(function(){
+  var sp; try{ sp=new URLSearchParams(location.search); }catch(e){ return; }
+  var sid=sp.get('sid'); if(sp.get('paid')!=='1' || !sid) return;
+  var d=null; try{ d=sessionStorage.getItem('llp_photo'); mode=sessionStorage.getItem('llp_mode')||mode; }catch(e){}
+  q('emptyMsg').hidden=true; q('resultBox').hidden=false; q('confirm').hidden=true; q('checks').innerHTML='';
+  q('verdict').className='verdict'; q('verdict').textContent='Confirming your payment with Sifalo Pay…';
+  q('results').scrollIntoView({block:'start'});
+  fetch('/api/verify?sid='+encodeURIComponent(sid)+'&product=dv-photo').then(function(r){return r.json();}).then(function(v){
+    if(!v.paid){ q('verdict').className='verdict bad'; q('verdict').textContent='We could not confirm this payment yet. If money left your account, email kcipay59@gmail.com with this code: '+sid; return; }
+    if(!d){ q('verdict').className='verdict bad'; q('verdict').textContent='Payment confirmed, but this browser lost your photo. Email kcipay59@gmail.com with code '+sid+' and we will help, or redo the photo here — your payment code stays valid.'; return; }
+    fetch(d).then(function(r){return r.blob();}).then(function(b){
+      outBlob=b; outUrl=URL.createObjectURL(b);
+      q('verdict').className='verdict ok'; q('verdict').textContent='Payment confirmed. Thank you! Download your photo below.';
+      q('buyBox').hidden=false; q('payBtn').hidden=true; q('dlBtn').hidden=false; q('preview').src=d; q('priceTag').textContent='';
+      q('meta').textContent='600 × 600 px JPEG, '+Math.round(b.size/1024)+' KB'; q('payNote').textContent='Payment code: '+sid+'. Keep it for your records.';
+    });
+  }).catch(function(){ q('verdict').className='verdict bad'; q('verdict').textContent='Could not reach the payment server. Refresh this page to try again.'; });
+})();
+drawOverlay();
+})();
+</script>
+</body>
+</html>

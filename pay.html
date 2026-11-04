@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure payment – Launchline Studio</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:#111827;background:#F3F4F6}
+main{max-width:520px;margin:0 auto;padding:64px 20px}
+.card{background:#fff;border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:16px;box-shadow:0 12px 40px rgba(17,24,39,.08)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:30px;margin:0}
+.price{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700}
+.btn{font:inherit;font-weight:600;font-size:17px;background:#2B50E8;color:#fff;border:0;border-radius:10px;padding:16px;cursor:pointer;min-height:52px}
+.btn:disabled{opacity:.6;cursor:wait}
+.muted{color:#4B5563;font-size:15px;line-height:1.6;margin:0}
+.methods{display:flex;gap:8px;flex-wrap:wrap}
+.methods span{font-size:13px;font-weight:600;background:#EEF2FF;color:#1E3A8A;border-radius:999px;padding:5px 10px}
+.err{color:#B91C1C;font-weight:600;margin:0}
+</style>
+</head>
+<body>
+<main>
+<div class="card">
+<a href="index.html" style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#111827;text-decoration:none">Launchline<span style="color:#2B50E8">.</span> Studio</a>
+<h1 id="name">Secure payment</h1>
+<div class="price" id="price">—</div>
+<p class="muted" id="desc">You will be taken to Sifalo Pay's secure page to pay, then brought back here.</p>
+<div class="methods"><span>Visa</span><span>Mastercard</span><span>EVC Plus</span><span>ZAAD</span><span>Sahal</span><span>eDahab</span><span>Premier Wallet</span></div>
+<button class="btn" id="pay" type="button">Pay securely</button>
+<p class="err" id="err" hidden></p>
+<p class="muted" style="font-size:13px">Payments are processed by Sifalo Pay. We never see your card or wallet details. Questions: <a href="mailto:kcipay59@gmail.com">kcipay59@gmail.com</a></p>
+</div>
+</main>
+<script>
+var PRODUCTS = {
+  'website-starter': {name:'Starter Page website', price:'$250', desc:'One-page, mobile-friendly website, copy written for you, contact form, 1 round of changes. Pay after you approve your draft.'},
+  'website-business': {name:'Business Page website', price:'$450', desc:'Up to 3 pages, booking or quote form, Google-ready basics, 2 rounds of changes. Pay after you approve your draft.'},
+  'care-plan': {name:'Care Plan – 1 month', price:'$30', desc:'Text, price and photo updates, hosting kept running, monthly form check.'},
+  'dv-photo': {name:'DV Lottery / US visa photo', price:'$2', desc:'Your checked 600×600 photo. Best paid from the photo tool page so your photo downloads automatically.'}
+};
+var key = new URLSearchParams(location.search).get('product');
+var p = PRODUCTS[key];
+var btn = document.getElementById('pay'), err = document.getElementById('err');
+if(!p){ document.getElementById('name').textContent='Choose a service'; document.getElementById('desc').textContent='This payment link is incomplete. Please use the link we sent you, or email us.'; btn.disabled=true; }
+else { document.getElementById('name').textContent=p.name; document.getElementById('price').textContent=p.price; document.getElementById('desc').textContent=p.desc; btn.textContent='Pay '+p.price+' securely'; }
+btn.addEventListener('click', function(){
+  if(!p) return;
+  btn.disabled=true; btn.textContent='Opening secure payment…'; err.hidden=true;
+  fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:key})})
+    .then(function(r){return r.json();})
+    .then(function(d){ if(d.url) location.href=d.url; else throw new Error(d.error||'failed'); })
+    .catch(function(){ btn.disabled=false; btn.textContent='Pay '+p.price+' securely'; err.textContent='Payment could not be started. Please try again in a minute.'; err.hidden=false; });
+});
+</script>
+</body>
+</html>
