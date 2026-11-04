@@ -103,13 +103,13 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
 
 <div id="alignBox" hidden>
 <div class="step" style="margin-top:20px">Step 2 · Line up</div>
-<h2>Fit your face to the guides</h2>
-<p class="small muted" style="margin:0 0 12px">Drag the photo and use zoom so that the <b>top of your hair</b> touches the blue line, your <b>chin</b> sits on the orange line and your <b>eyes</b> are inside the green band.</p>
+<h2>Check the position</h2>
+<p class="small muted" id="autoMsg" style="margin:0 0 12px">We centre your face automatically. If needed, drag or zoom so your <b>eyes</b> are inside the green band and your <b>chin</b> sits on the orange line.</p>
 <div class="stage" id="stage"><canvas id="view" width="600" height="600"></canvas><canvas id="overlay" width="600" height="600"></canvas></div>
 <div class="controls">
 <label class="zoom">Zoom <input id="zoom" type="range" min="0.2" max="4" step="0.01" value="1"></label>
 <div class="legend"><span><i style="background:#2563EB"></i>Top of hair</span><span><i style="background:#16A34A;height:10px;opacity:.5"></i>Eyes</span><span><i style="background:#EA580C"></i>Chin</span></div>
-<div class="row"><button class="btn ghost" type="button" id="reset">Re-centre</button><button class="btn dark" type="button" id="check">Check my photo</button></div>
+<div class="row"><button class="btn ghost" type="button" id="reset">Auto-centre</button><button class="btn dark" type="button" id="check">Check my photo</button></div>
 </div>
 </div>
 </div>
@@ -181,6 +181,7 @@ footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-s
 <span>Questions: <a href="mailto:kcipay59@gmail.com">kcipay59@gmail.com</a></span>
 </div></footer>
 
+<script src="face-detect.js"></script>
 <script>
 var PRICE = '$2';   // charged securely through Sifalo Pay (server: /api/checkout)
 
@@ -194,6 +195,8 @@ var view = document.getElementById('view'), vctx = view.getContext('2d');
 var over = document.getElementById('overlay'), octx = over.getContext('2d');
 var zoom = document.getElementById('zoom');
 var outBlob = null, outUrl = null;
+var face = null, faceCount = 0, model = null;
+fetch('lbp-face.json').then(function(r){return r.json();}).then(function(m){ model=m; if(img) findFace(); }).catch(function(){});
 
 function q(id){return document.getElementById(id);}
 
@@ -237,7 +240,7 @@ q('file').addEventListener('change', function(e){
   var r = new FileReader();
   r.onload = function(){
     var im = new Image();
-    im.onload = function(){ img = im; q('alignBox').hidden=false; drawOverlay(); fit(); q('resultBox').hidden=true; q('emptyMsg').hidden=false; q('emptyMsg').textContent='Line up your face, then press "Check my photo".'; q('alignBox').scrollIntoView({behavior:'smooth',block:'start'}); };
+    im.onload = function(){ img = im; q('alignBox').hidden=false; drawOverlay(); fit(); findFace(); q('resultBox').hidden=true; q('emptyMsg').hidden=false; q('emptyMsg').textContent='Line up your face, then press "Check my photo".'; q('alignBox').scrollIntoView({behavior:'smooth',block:'start'}); };
     im.onerror = function(){ alert('That file could not be opened. Please upload a JPG or PNG photo.'); };
     im.src = r.result;
   };
@@ -249,7 +252,38 @@ zoom.addEventListener('input', function(){
   var ns = parseFloat(zoom.value), cx = S/2, cy = (CROWN+CHIN)/2;
   ox = cx - (cx-ox)*(ns/scale); oy = cy - (cy-oy)*(ns/scale); scale = ns; draw(view, vctx);
 });
-q('reset').addEventListener('click', function(){ if(img) fit(); });
+q('reset').addEventListener('click', function(){ if(!img) return; if(face) autoFit(); else fit(); });
+
+function findFace(){
+  face=null; faceCount=0;
+  if(!model || !img || typeof detectFaces!=='function'){ return; }
+  var maxSide=480, k=Math.min(1, maxSide/Math.max(img.width,img.height));
+  var w=Math.max(1,Math.round(img.width*k)), h=Math.max(1,Math.round(img.height*k));
+  var c=document.createElement('canvas'); c.width=w; c.height=h; var cx=c.getContext('2d'); cx.drawImage(img,0,0,w,h);
+  var px=cx.getImageData(0,0,w,h).data, g=new Uint8Array(w*h);
+  for(var i=0,j=0;i<g.length;i++,j+=4) g[i]=(px[j]*77+px[j+1]*150+px[j+2]*29)>>8;
+  var found=[]; try{ found=detectFaces(g,w,h,model,{minSize:Math.max(24,Math.round(Math.min(w,h)*0.12))}); }catch(e){}
+  if(!found.length){
+    q('autoMsg').innerHTML='';
+    q('autoMsg').appendChild(document.createTextNode('We could not find a face automatically. Make sure you look straight at the camera with your face uncovered and well lit, or line it up yourself: eyes in the green band, chin on the orange line.'));
+    q('autoMsg').style.color='#92400E'; return;
+  }
+  found.sort(function(a,b){return b.w-a.w;});
+  var big=found[0];
+  faceCount=found.filter(function(f){return f.w>=big.w*0.55 && f.n>=3;}).length;
+  face={x:big.x/k, y:big.y/k, w:big.w/k, h:big.h/k};
+  q('autoMsg').style.color='';
+  q('autoMsg').textContent = faceCount>1 ? 'We found more than one face. The photo must show only you.' : 'Done! We centred your face automatically. You can still drag or zoom if you want to adjust it.';
+  autoFit();
+}
+function autoFit(){
+  var eyeY=face.y+0.31*face.h, chinY=face.y+1.12*face.h, cxp=face.x+face.w/2;
+  var eyeT=(EYE_TOP+EYE_BOT)/2 - 3;
+  var s=(CHIN-eyeT)/(chinY-eyeY);
+  minScale=Math.min(minScale, s*0.5);
+  zoom.min=minScale.toFixed(3); zoom.max=Math.max(parseFloat(zoom.max), s*3).toFixed(3);
+  scale=s; zoom.value=s; ox=S/2-cxp*s; oy=eyeT-eyeY*s; draw(view,vctx);
+}
 
 var stage = q('stage'), drag = null;
 stage.addEventListener('pointerdown', function(e){ if(!img) return; stage.setPointerCapture(e.pointerId); var k = S/stage.clientWidth; drag={x:e.clientX,y:e.clientY,ox:ox,oy:oy,k:k}; });
@@ -341,6 +375,9 @@ q('check').addEventListener('click', function(){
   res.push(f.sharp>=40 ? {s:'pass',t:'Sharp and in focus',d:'No noticeable blur.'} : {s:'fail',t:'Photo looks blurry',d:'Hold the phone still, tap the screen to focus, and use good light.'});
   // 6 framing sanity: face area should differ from background
   res.push(Math.abs(f.mean-bgMean)>12 || f.std>25 ? {s:'pass',t:'Head inside the guide',d:'Head size target 62% of height; eyes in the 56–69% band.'} : {s:'fail',t:'No face found inside the guide',d:'Move the photo so your face fills the dashed oval.'});
+  // 6b automatic face detection
+  if(face){ res.push(faceCount>1 ? {s:'fail',t:'More than one face',d:'Only you may be in the photo. Retake it with nobody else in the picture.'} : {s:'pass',t:'Face found and centred',d:'One face detected and placed on the official guide lines.'}); }
+  else if(model){ res.push({s:'warn',t:'Face not detected automatically',d:'Make sure you look straight at the camera, face uncovered and well lit. Check the guides carefully.'}); }
   // 7 format
   res.push({s:'pass',t:'Format',d:'Saved as 600×600 JPEG under 240 KB.'});
 
